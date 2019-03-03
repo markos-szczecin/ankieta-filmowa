@@ -16,7 +16,6 @@ import ReactDOM from 'react-dom';
 
 import Items from './Components/Items';
 
-
 class App extends React.Component {
     constructor() {
         super();
