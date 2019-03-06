@@ -4,7 +4,36 @@
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
+    {#<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>#}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://antenna.io/demo/jquery-bar-rating/jquery.barrating.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://antenna.io/demo/jquery-bar-rating/dist/themes/fontawesome-stars.css">
+    <style>
+        .move-poster {
+            width: 100px;
+            margin: 10px;
+        }
+        .movie-detail {
+            line-height: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .br-wrapper.br-theme-fontawesome-stars {
+            width: 100%;
+            margin-left: 15px;
+            margin-bottom: 10px;
+        }
+        .br-theme-fontawesome-stars .br-widget {
+            height: inherit;
+            white-space: inherit;
+            width: 100%;
+        }
+        .ok-btn {
+            float: right;position: relative;right: 0;bottom: 0;text-align: right;
+        }
+    </style>
 </head>
 <body>
 {% block body %}{% endblock %}
@@ -13,6 +42,11 @@
     <!-- Include the compiled script-->
     <script type="text/javascript" src="{{ asset('build/js/app.js') }}"></script>
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+        })
+    </script>
 {% endblock %}
 </body>
 </html>

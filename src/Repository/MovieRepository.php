@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Movie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Connection;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -18,6 +19,77 @@ class MovieRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Movie::class);
     }
+
+    /**
+     * @param int $movieId
+     * @return string
+     */
+    public function getJsonById(int $movieId): string
+    {
+        /** @var Movie $movie */
+        $movie = $this->createQueryBuilder('m')
+            ->andWhere('m.id = :val')
+            ->setParameter('val', $movieId)
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+        $movie->getActors();
+        return reset($this->createQueryBuilder('m')
+            ->andWhere('m.id = :val')
+            ->setParameter('val', $movieId)
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+        );
+    }
+
+    /**
+     * @param array $notMoviesIds
+     * @return Movie
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getRandMovieForUser(array $notMoviesIds)
+    {
+        $builder = $this->createQueryBuilder('m');
+        if ($notMoviesIds) {
+            $builder
+                ->andWhere('m.id NOT IN (:ids)')
+                ->setParameter('ids', $notMoviesIds, Connection::PARAM_INT_ARRAY);
+        }
+        return $builder
+            ->orderBy('m.users_marks_quantity', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
+     * @param array $notMoviesIds
+     * @param int $limit
+     * @return array
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getRandMoviesForUser(array $notMoviesIds, int $limit = 1)
+    {
+        if (1 >= $limit) {
+            return [$this->getRandMovieForUser($notMoviesIds)];
+        } else {
+            $builder = $this->createQueryBuilder('m');
+            if ($notMoviesIds) {
+                $builder
+                    ->andWhere('m.id NOT IN (:ids)')
+                    ->setParameter('ids', $notMoviesIds, Connection::PARAM_STR_ARRAY);
+            }
+
+            return $builder
+                ->orderBy('m.users_marks_quantity', 'ASC')
+                ->setMaxResults($limit)
+                ->getQuery()
+                ->getResult();
+        }
+    }
+
+
 
     // /**
     //  * @return Movie[] Returns an array of Movie objects

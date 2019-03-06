@@ -23,7 +23,7 @@ class Director
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Movie", mappedBy="director_id")
+     * @ORM\OneToMany(targetEntity="Movie", mappedBy="director")
      */
     private $movies;
 

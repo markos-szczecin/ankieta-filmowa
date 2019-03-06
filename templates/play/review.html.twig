@@ -1,0 +1,56 @@
+<div class="movie-card card col-md-4" style="width:200px">
+    <div class="card-body">
+        <input class="movie_id" type="hidden" value="{{ id }}" name="movie_id"/>
+        <div class="row">
+            <div class="col-md-12"><h4 class="card-title">{{ title }}</h4></div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <img class="move-poster" src="{{ photo }}"/>
+            </div>
+            <div class="col-md-8">
+                <div class="row movie-detail">
+                    <div class="col-md-5">
+                        <div>Kraj:</div>
+                        <div><small>{{ country }}</small></div>
+                    </div>
+                    <div class="col-md-7">
+                        <div>Reżyser:</div>
+                        <div><small>{{ director }}</small></div>
+                    </div>
+                </div>
+                <div class="row movie-detail">
+                    {#<div class="col-md-5">#}
+                        {#<div>Obsada</div>#}
+                        {#<div><small><span>Sprawdź</span></small></div>#}
+                    {#</div>#}
+                    <div class="col-md-12">
+                        <div>Gatunek:</div>
+                        <div><small>{{ genre }}</small></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <select class="star-rates">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option selected value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+                <div>
+                    <button class="btn btn-primary btn-sm ok-btn" data-loading-text="<i class='fa fa-spinner fa-spin '></i>">Zatwierdź</button>
+                </div>
+                <div>
+                    <button class="btn btn-danger btn-sm no-btn">Nie znam</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
