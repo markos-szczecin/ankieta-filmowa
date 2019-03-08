@@ -2,17 +2,17 @@ import React from 'react';
 
 
 const Items = ({ id, title, photo, mark, director, country, genre, fun }) => (
-    <div className="movie-card card col-md-4" style={{width:200}}>
+    <div className="movie-card card col-md-4 col-12">
         <div className="card-body">
             <input className="movie_id" type="hidden" value={id} name="movie_id"/>
             <div className="row">
                 <div className="col-md-12"><h4 className="card-title">{title}</h4></div>
             </div>
             <div className="row">
-                <div className="col-md-4">
+                <div className="col-md-4 col-12 text-center">
                     <img className="move-poster" src={photo}/>
                 </div>
-                <div className="col-md-8">
+                <div className="col-md-8 col-12">
                     <div className="row movie-detail">
                         <div className="col-md-5">
                             <div>Kraj:</div>
@@ -24,10 +24,6 @@ const Items = ({ id, title, photo, mark, director, country, genre, fun }) => (
                         </div>
                     </div>
                     <div className="row movie-detail">
-                        {/*<div className="col-md-5">*/}
-                            {/*<div>Obsada</div>*/}
-                            {/*<div><small><span>Sprawdź</span></small></div>*/}
-                        {/*</div>*/}
                         <div className="col-md-12">
                             <div>Gatunek:</div>
                             <div><small>{genre}</small></div>
@@ -53,7 +49,7 @@ const Items = ({ id, title, photo, mark, director, country, genre, fun }) => (
                         </button>
                     </div>
                     <div>
-                        <button onClick={fun.bind(this)} className="btn btn-danger btn-sm no-btn">Nie oglądałem</button>
+                        <button onClick={fun.bind(this)} className="btn btn-danger btn-sm no-btn">Nie znam</button>
                     </div>
                 </div>
             </div>

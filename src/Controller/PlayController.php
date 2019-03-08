@@ -40,17 +40,22 @@ class PlayController extends MainController
      */
     public function review(Request $request)
     {
-        $this->saveReview(['id' => $request->get('movieId'), 'mark' => $request->get('mark')]);
-        $movie = $this->getMovie();
+        try {
+            $this->saveReview(['id' => $request->get('movieId'), 'mark' => $request->get('mark')]);
+            $movie = $this->getMovie();
 
-        return $this->render('play/review.html.twig', [
-            'id' => $movie['id'],
-            'title' => $movie['title'],
-            'director' => $movie['director_name'],
-            'genre' => $movie['genres_string'],
-            'country' => $movie['countries_string'],
-            'photo' => $movie['photo']
-        ]);
+            return $this->render('play/review.html.twig', [
+                'id' => $movie['id'],
+                'title' => $movie['title'],
+                'director' => $movie['director_name'],
+                'genre' => $movie['genres_string'],
+                'country' => $movie['countries_string'],
+                'photo' => $movie['photo']
+            ]);
+        } catch (\Throwable $t) {
+            file_put_contents('errorlog.dat', '[' . date('Y-m-d H:i:s') . '] ' . $e->getMessage() . '<br />' . $e->getTraceAsString() . '<br />' . PHP_EOL, FILE_APPEND);
+            return [];
+        }
     }
 
     /**
@@ -77,20 +82,25 @@ class PlayController extends MainController
     private function getMoviesIdsMarkedByUser()
     {
         try {
+            $user = $this->getDoctrine()->getRepository(User::class)->findOneByUsername(Cookie::getUsername());
+            if (!$user) {
+                return [];
+            }
             $marks = $this->getDoctrine()->getRepository(Mark::class)->findByUserId(
-                $this->getDoctrine()->getRepository(User::class)->findOneByUsername(Cookie::getUsername())->getId()
+                $user->getId()
             );
+            $ids = [];
+            foreach ($marks as $mark) {
+                $ids[] = $mark->getMovie()->getId();
+            }
+            foreach (Session::getLoadedMovies() as $movie) {
+                $ids[] = $movie;
+            }
+            return $ids;
         } catch (\Throwable $t) {
+            file_put_contents('errorlog.dat', '[' . date('Y-m-d H:i:s') . '] ' . $t->getMessage() . '<br />' . $e->getTraceAsString() . '<br />' . PHP_EOL, FILE_APPEND);
             return [];
         }
-        $ids = [];
-        foreach ($marks as $mark) {
-            $ids[] = $mark->getMovie()->getId();
-        }
-        foreach (Session::getLoadedMovies() as $movie) {
-            $ids[] = $movie;
-        }
-        return $ids;
     }
 
     /**
@@ -121,7 +131,8 @@ class PlayController extends MainController
                 $this->getMoviesArray($limit, true);
             }
             return $ret;
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
+            file_put_contents('errorlog.dat', '[' . date('Y-m-d H:i:s') . '] ' . $e->getMessage() . '<br />' . $e->getTraceAsString() . '<br />' . PHP_EOL, FILE_APPEND);
             return [];
         }
     }

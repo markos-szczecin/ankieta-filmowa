@@ -84,8 +84,7 @@ class MainController extends AbstractController
 
             return true;
         } catch (\Throwable $e) {
-            var_dump($e->getMessage());
-            file_put_contents('errors.dat', '[' . date('Y-m-d H:i:s') . '] ' . $e->getMessage());
+            file_put_contents('errorlog.dat', '[' . date('Y-m-d H:i:s') . '] ' . $e->getMessage() . '<br />' . $e->getTraceAsString() . '<br />' . PHP_EOL, FILE_APPEND);
             return false;
         }
     }
