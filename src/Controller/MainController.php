@@ -42,6 +42,10 @@ class MainController extends AbstractController
         return $this->getDoctrine()->getRepository(User::class)->findOneByUsername(Cookie::getUsername());
     }
 
+    /**
+     * @param int $mark
+     * @return bool|int
+     */
     protected function validateMark(int $mark)
     {
         if ($mark > 10 || $mark < -1 || $mark == 0) {
@@ -51,18 +55,27 @@ class MainController extends AbstractController
         return $mark;
     }
 
+    protected function checkUser()
+    {
+        try {
+            if (!$this->getUser()) {
+                throw new \Exception('niepoprawny user');
+            }
+        } catch (\Exception $e) {
+            unset($_COOKIE[Cookie::COOKIE_ID]);
+            $this->register();
+        }
+        Session::getInstance();
+    }
+
     /**
      * @param array $data
      * @return bool
      */
     protected function saveReview(array $data)
     {
-        if (!Cookie::getUsername()) {
-            $this->register();
-        } else {
-            Session::getInstance();
-        }
         try {
+           $this->checkUser();
             if ($this->isUserMarkedMovie((int) $data['id'])) {
                 return false;
             }

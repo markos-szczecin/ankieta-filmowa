@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135972702-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-135972702-1');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{% block title %}Welcome!{% endblock %}</title>
@@ -33,6 +43,9 @@
         }
         .ok-btn, .no-btn {
             margin-top: 10px;
+        }
+        .br-theme-fontawesome-stars .br-widget a {
+            font-size: 25px !important;
         }
     </style>
 </head>

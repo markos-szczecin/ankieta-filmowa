@@ -13,6 +13,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\VarDumper\Exception\ThrowingCasterException;
 use Throwable;
 
+/**
+ * Oranie po serwisie FilmWeb i wyciąganie informacji o filmach (nieoptymalne, ale działa)
+ * 
+ * @package App\Controller
+ */
 class FilmApiController extends AbstractController
 {
     private $genres;

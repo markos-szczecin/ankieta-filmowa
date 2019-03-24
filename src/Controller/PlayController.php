@@ -15,7 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class PlayController extends MainController
 {
     /**
-     * @return User
+     * @return User|mixed|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
     protected function getUser()
     {
